@@ -1,0 +1,12 @@
+/* styles.css */
+body {
+  background-color: white;
+}
+
+.container {
+  text-align: center;
+}
+
+.card {
+  margin-top: 20px;
+}

@@ -1,0 +1,67 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://source.unsplash.com/1600x900/?weather');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.619);
+            /* Add a semi-transparent background to make text readable */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Weather Wise</h1>
+        <form action="/weather" method="post" class="form-inline justify-content-center">
+            <div class="form-group mr-3">
+                <input type="text" class="form-control" id="cityInput" name="city" placeholder="Enter city name">
+                <div id="cityList" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Weather</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('cityInput').addEventListener('focus', function () {
+            fetch('/cities')
+                .then(response => response.json())
+                .then(data => {
+                    const cityList = document.getElementById('cityList');
+                    cityList.innerHTML = '';
+                    data.forEach(city => {
+                        const link = document.createElement('a');
+                        link.classList.add('dropdown-item');
+                        link.href = '#';
+                        link.textContent = city;
+                        link.addEventListener('click', function () {
+                            document.getElementById('cityInput').value = city;
+                        });
+                        cityList.appendChild(link);
+                    });
+                });
+        });
+    </script>
+</body>
+
+</html>
